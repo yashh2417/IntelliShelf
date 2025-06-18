@@ -1,0 +1,5 @@
+torch
+torchvision
+matplotlib
+bs4
+requests
