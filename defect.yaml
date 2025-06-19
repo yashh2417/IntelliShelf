@@ -1,0 +1,6 @@
+path: defect_dataset
+train: images
+val: images
+
+names:
+  0: defect
