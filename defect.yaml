@@ -1,6 +1,6 @@
-path: defect_dataset
-train: images
-val: images
+path: /Users/yash/Library/IntelliShelf/defect-dataset  # absolute or relative to train script
+train: images/train
+val: images/val
 
 names:
   0: defect
