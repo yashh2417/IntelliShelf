@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Product Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .upload-box {
+            margin-bottom: 30px;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+        }
+
+        .product img {
+            max-width: 150px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .details {
+            max-width: 800px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>FastAPI Music Store</h1>
+
+    <div class="upload-box">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Upload Image:</label>
+            <input type="file" name="file" required><br><br>
+
+            <label for="prop">Enter Prop:</label>
+            <input type="text" name="prop" required><br><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <h2>Uploaded Products</h2>
+    {% for product in products %}
+    <div class="product">
+        <img src="{{ product.image }}" alt="{{ product.class }}" />
+        <div class="details">
+            <h3>{{ product.class|capitalize }} (ID: {{ product.id }})</h3>
+            <h4>Description:</h4>
+            <p>{{ product.description }}</p>
+            <h4>**Features:</h4>
+            <ul>
+                {% for feature in product.features %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</body>
+
+</html>

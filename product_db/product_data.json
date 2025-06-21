@@ -1,0 +1,88 @@
+[
+    {
+        "id": "2e60b380-d020-40aa-a5c8-4df87fa68107",
+        "class": "drum",
+        "image": "/images/2e60b380-d020-40aa-a5c8-4df87fa68107.jpg",
+        "description": "N/A",
+        "features": []
+    },
+    {
+        "id": "8c39e5b8-be9b-49e6-ac88-cca2355f421f",
+        "class": "drum",
+        "image": "/images/8c39e5b8-be9b-49e6-ac88-cca2355f421f.jpg",
+        "description": "N/A",
+        "features": []
+    },
+    {
+        "id": "540444ff-f993-41de-8574-48cf92248a25",
+        "class": "guitar",
+        "image": "/images/540444ff-f993-41de-8574-48cf92248a25.jpg",
+        "description": "N/A",
+        "features": [],
+        "prop": "brown colour, Indian wood, electric, chargeable"
+    },
+    {
+        "id": "9a3b4d7a-187e-444a-858d-4d51a1373dc2",
+        "class": "guitar",
+        "image": "/images/9a3b4d7a-187e-444a-858d-4d51a1373dc2.jpg",
+        "description": "N/A",
+        "features": []
+    },
+    {
+        "id": "740ccbb5-800d-4e4c-a569-ff9115d294e7",
+        "class": "flute",
+        "image": "/images/740ccbb5-800d-4e4c-a569-ff9115d294e7.jpg",
+        "description": "This tiny wooden flute is perfect for little musicians!  At just 7 inches long, it's easy for small hands to hold and play.  With six finger holes, it's simple enough for beginners to learn the basics and create sweet melodies. Made from smooth, beautiful wood, this flute is a delightful instrument for kids to explore the magic of music.",
+        "features": [
+            "7 inches long",
+            "Wooden",
+            "6 finger holes"
+        ]
+    },
+    {
+        "id": "59219707-0b35-40f4-8bec-186b957e652a",
+        "class": "tabla",
+        "image": "/images/59219707-0b35-40f4-8bec-186b957e652a.jpg",
+        "description": "This impressive tabla is crafted from wood, boasting a substantial 3-foot diameter and a height of 2.5 feet. Its large size suggests a powerful and resonant sound.",
+        "features": [
+            "3 feet diameter",
+            "2.5 feet tall",
+            "wooden"
+        ]
+    },
+    {
+        "id": "ceebaf54-26b4-4669-93d5-f4056b30e2fe",
+        "class": "violin",
+        "image": "/images/ceebaf54-26b4-4669-93d5-f4056b30e2fe.jpg",
+        "description": "A professional-grade violin crafted from fine wood, featuring resonant metal strings for exceptional tone and projection.  Designed for discerning musicians demanding superior performance and playability.",
+        "features": [
+            "Wooden body",
+            "Professional-grade construction",
+            "Metal strings"
+        ]
+    },
+    {
+        "id": "3275a823-8093-4327-92d8-7a8efd8a2dd3",
+        "class": "flute",
+        "image": "/images/3275a823-8093-4327-92d8-7a8efd8a2dd3.jpg",
+        "description": "This adorable 6-inch blue metal flute is perfect for young musicians!  With its five finger holes, it's easy for little hands to learn and play simple melodies.  A great introduction to the world of music.",
+        "features": [
+            "Blue color",
+            "Metal material",
+            "5 holes",
+            "For kids",
+            "6 inches long"
+        ]
+    },
+    {
+        "id": "f9567f37-7014-40b5-b168-35042dcbebcf",
+        "class": "drum",
+        "image": "/images/f9567f37-7014-40b5-b168-35042dcbebcf.jpg",
+        "description": "This 4-foot diameter metal drum produces a high-frequency, ringing sound. Its metallic construction and large size contribute to its unique, resonant tone, ideal for creating bright, sharp percussion effects.",
+        "features": [
+            "4 feet diameter",
+            "metal construction",
+            "high-frequency sound"
+        ]
+    }
+]
