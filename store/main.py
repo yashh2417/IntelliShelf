@@ -12,6 +12,7 @@ from fastapi.templating import Jinja2Templates
 from PIL import Image
 from torchvision import transforms
 import torch
+from ultralytics import YOLO
 
 from langchain_google_genai import ChatGoogleGenerativeAI
 from dotenv import load_dotenv
@@ -40,6 +41,8 @@ classify_model = torch.load("../model/classify.pth", map_location=DEVICE, weight
 classify_model.eval()
 classify_model.to(DEVICE)
 
+defect_detection_model = YOLO("../runs/detect/train2/weights/best.pt")
+
 preprocess = transforms.Compose([
     transforms.Resize(256),
     transforms.CenterCrop(224),
@@ -63,6 +66,20 @@ def classify_image(image_path: Path):
         logits = classify_model(input_tensor)
         predicted_idx = logits.argmax().item()
         return classes[predicted_idx]
+    
+def defect_detection(image_path: Path):
+    result = defect_detection_model(image_path)
+    boxes = result[0].boxes
+    threshold = 0.25
+    max_conf = 0.0
+
+    for box in boxes:
+        if box[0].cls == 0:
+            max_conf = max(box.conf[0], max_conf)
+    defect = max_conf >= threshold
+
+    return defect
+
 
 def clean_json_string(s: str) -> str:
     """Remove Markdown-style triple backticks and language hints."""
@@ -92,18 +109,27 @@ def save_product(product):
         json.dump(data, f, indent=4)
 
 # --- Routes ---
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     products = []
     if DATA_FILE.exists():
         with open(DATA_FILE, 'r') as f:
             products = json.load(f)
-    return templates.TemplateResponse("index.html", {"request": request, "products": products})
+    return templates.TemplateResponse("products.html", {"request": request, "products": products})
+    
+
+
+@app.get("/addProduct", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
 
 from fastapi import Form
 
 @app.post("/upload")
 async def upload_image(
+    request: Request,
     file: UploadFile = File(...),
     prop: str = Form(...)
 ):
@@ -114,16 +140,23 @@ async def upload_image(
         buffer.write(await file.read())
 
     product_class = classify_image(image_path)
-    details = generate_description(product_class, prop)
+    defect = defect_detection(image_path)
 
-    product = {
-        "id": image_id,
-        "class": product_class,
-        "image": f"/images/{image_path.name}",
-        "description": details.get("description", "N/A"),
-        "features": details.get("features", [])
-        # "prop": prop  # include the additional prop here
-    }
-    save_product(product)
-    # return templates.TemplateResponse("index.html", {"request": request, "products": product})
-    return {"status": "success", "product": product}
+    if defect:
+        return templates.TemplateResponse("defect.html", {"request": request, "class": product_class})
+    
+    else:
+
+        details = generate_description(product_class, prop)
+
+        product = {
+            "id": image_id,
+            "class": product_class,
+            "image": f"/images/{image_path.name}",
+            "description": details.get("description", "N/A"),
+            "features": details.get("features", [])
+            # "prop": prop  # include the additional prop here
+        }
+        save_product(product)
+
+        return templates.TemplateResponse("uploaded.html", {"request":request, "product": product})

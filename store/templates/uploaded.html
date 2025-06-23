@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            display: flex;
+        }
+
+        .product img {
+            max-width: 150px;
+            border-radius: 5px;
+            margin-right: 15px;
+        }
+
+        .details {
+            max-width: 800px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Uploaded Product</h2>
+    <div class="product">
+        <img src="{{ product.image }}" alt="{{ product.class }}" />
+        <div class="details">
+            <h3>{{ product.class|capitalize }} (ID: {{ product.id }})</h3>
+            <h4>Description:</h4>
+            <p>{{ product.description }}</p>
+            <h4>Features:</h4>
+            <ul>
+                {% for feature in product.features %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+    <button><a href="http://127.0.0.1:8000/addProduct">Upload a new Product</a></button>
+    <button><a href="http://127.0.0.1:8000/">See our Products</a></button>
+
+
+
+
+
+</body>
+
+</html>
