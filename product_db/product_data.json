@@ -219,5 +219,26 @@
             "Electric",
             "5 Strings"
         ]
+    },
+    {
+        "id": "5e0823df-0dea-456b-a390-21c3a9dcfb4f",
+        "class": "violin",
+        "image": "/images/5e0823df-0dea-456b-a390-21c3a9dcfb4f.jpg",
+        "description": "A rich, brown wooden violin, its resonant body promising a powerful sound.  The strong strings are taut, ready to sing.",
+        "features": [
+            "Brown",
+            "Wooden",
+            "Strong strings"
+        ]
+    },
+    {
+        "id": "dc017d9a-dd95-496d-90c0-23cb2922f0ed",
+        "class": "violin",
+        "image": "/images/dc017d9a-dd95-496d-90c0-23cb2922f0ed.jpg",
+        "description": "A rich, brown wooden violin, its smooth curves hinting at the resonant tones held within. The warm brown of the wood speaks of age and craftsmanship, promising a beautiful and expressive sound.",
+        "features": [
+            "Wooden",
+            "Brown"
+        ]
     }
 ]

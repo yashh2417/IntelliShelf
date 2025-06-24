@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Product Return Status</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h2>Status of Return</h2>
+
+    <div class="product">
+        {% if defected %}
+        {% if days > 2 %}
+        <h2>
+            The uploaded image shows a defect in your <strong>{{ class }}</strong>. However, it has been
+            <strong>{{ days }}</strong> days since the purchase, which exceeds our eligible return period.
+            Unfortunately, we are unable to process your return request.
+        </h2>
+        {% else %}
+        <h2>
+            The uploaded image shows a defect in your <strong>{{ class }}</strong>. Since only
+            <strong>{{ days }}</strong> days have passed since the purchase, which is within our eligible return period,
+            we are able to process your return request.
+        </h2>
+        {% endif %}
+        {% else %}
+        {% if days > 7 %}
+        <h2>
+            The uploaded image shows no defect in your <strong>{{ class }}</strong>. Additionally,
+            <strong>{{ days }}</strong> days have passed since the purchase, which exceeds our return window.
+            Unfortunately, we are unable to process your return request.
+        </h2>
+        {% else %}
+        <h2>
+            The uploaded image shows no defect in your <strong>{{ class }}</strong>. However, since only
+            <strong>{{ days }}</strong> days have passed, it is still within our eligible return period.
+            We are able to process your return request.
+        </h2>
+        {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="actions">
+        <button><a href="http://127.0.0.1:8000/addProduct">Upload a New Product</a></button>
+        <button><a href="http://127.0.0.1:8000/">View All Products</a></button>
+        <button><a href="http://127.0.0.1:8000/chatbot">Chat with Support</a></button>
+        <button><a href="http://127.0.0.1:8000/return">Check Another Product</a></button>
+    </div>
+</body>
+
+</html>

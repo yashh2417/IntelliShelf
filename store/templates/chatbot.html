@@ -1,0 +1,49 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gemini RAG Chatbot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <h1>🎵 Gemini RAG Chatbot</h1>
+    <div id="chat-box"></div>
+
+    <form id="chat-form">
+        <input type="text" id="message" placeholder="Ask something..." required />
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        const chatForm = document.getElementById("chat-form");
+        const chatBox = document.getElementById("chat-box");
+        const sessionId = "user1";  // Can make this dynamic later
+
+        chatForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const msg = document.getElementById("message").value;
+
+            chatBox.innerHTML += `<div><b>You:</b> ${msg}</div>`;
+            document.getElementById("message").value = "";
+
+            const response = await fetch("/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ session_id: sessionId, message: msg })
+            });
+
+            const data = await response.json();
+            chatBox.innerHTML += `<div><b>Bot:</b> ${data.response}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    </script>
+    <button><a href="http://127.0.0.1:8000/">See Our Products</a></button>
+    <button><a href="http://127.0.0.1:8000/return">Check return eligiblity</a></button>
+    <button><a href="http://127.0.0.1:8000/addProduct">Add a new Product</a></button>
+
+</body>
+
+</html>

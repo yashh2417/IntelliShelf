@@ -5,16 +5,20 @@ from pathlib import Path
 from typing import List
 
 from fastapi import FastAPI, File, UploadFile, Request, Form
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel
 
 from PIL import Image
 from torchvision import transforms
 import torch
 from ultralytics import YOLO
 
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationalRetrievalChain
+from langchain_chroma import Chroma
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -31,6 +35,7 @@ DATA_FILE = Path("../product_db/product_data.json")
 
 app = FastAPI()
 app.mount("/images", StaticFiles(directory=UPLOAD_DIR), name="images")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 # --- Load Model and Preprocessing ---
@@ -50,6 +55,10 @@ preprocess = transforms.Compose([
     transforms.Normalize(mean=[0.485, 0.456, 0.406],
                          std=[0.229, 0.224, 0.225]),
 ])
+
+# Initialize components
+embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+vectordb = Chroma(persist_directory="../chromadb", embedding_function=embedding)
 
 # --- Gemini Model ---
 model = ChatGoogleGenerativeAI(
@@ -160,3 +169,56 @@ async def upload_image(
         save_product(product)
 
         return templates.TemplateResponse("uploaded.html", {"request":request, "product": product})
+    
+# Session dictionary for memory
+sessions = {}
+
+# Homepage route
+@app.get("/chatbot", response_class=HTMLResponse)
+async def get_home(request: Request):
+    return templates.TemplateResponse("chatbot.html", {"request": request})
+
+# Chat endpoint
+class ChatRequest(BaseModel):
+    session_id: str
+    message: str
+
+@app.post("/chat")
+async def chat(req: ChatRequest):
+    session_id = req.session_id
+    message = req.message
+
+    if session_id not in sessions:
+        memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
+        chain = ConversationalRetrievalChain.from_llm(
+            llm=model,
+            retriever=vectordb.as_retriever(),
+            memory=memory,
+        )
+        sessions[session_id] = chain
+
+    chain = sessions[session_id]
+    response = chain.run(message)
+
+    return JSONResponse({"response": response})
+
+@app.get("/return", response_class=HTMLResponse)
+async def index(request: Request):
+    return templates.TemplateResponse("return.html", {"request": request})
+
+@app.post("/returnStatus")
+async def upload_image(
+    request: Request,
+    file: UploadFile = File(...),
+    days: int = Form(...)
+):
+    ext = file.filename.split(".")[-1]
+    image_id = str(uuid.uuid4())
+    image_path = UPLOAD_DIR / f"{image_id}.{ext}"
+    with open(image_path, "wb") as buffer:
+        buffer.write(await file.read())
+
+    product_class = classify_image(image_path)
+    defect = defect_detection(image_path)
+
+    return templates.TemplateResponse("returnStatus.html", {"request": request, "class": product_class, "defected": defect, "days": days})
