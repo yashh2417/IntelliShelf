@@ -2,10 +2,10 @@ import os
 import uuid
 import json
 from pathlib import Path
-from typing import List
+from io import BytesIO
 
 from fastapi import FastAPI, File, UploadFile, Request, Form
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -68,16 +68,16 @@ model = ChatGoogleGenerativeAI(
 )
 
 # --- Helper Functions ---
-def classify_image(image_path: Path):
-    image = Image.open(image_path).convert("RGB")
+def classify_image(image: Image.Image):
+    # image = Image.open(image).convert("RGB")
     input_tensor = preprocess(image).unsqueeze(0).to(DEVICE)
     with torch.no_grad():
         logits = classify_model(input_tensor)
         predicted_idx = logits.argmax().item()
         return classes[predicted_idx]
     
-def defect_detection(image_path: Path):
-    result = defect_detection_model(image_path)
+def defect_detection(image: Image.Image):
+    result = defect_detection_model(image)
     boxes = result[0].boxes
     threshold = 0.25
     max_conf = 0.0
@@ -142,19 +142,25 @@ async def upload_image(
     file: UploadFile = File(...),
     prop: str = Form(...)
 ):
-    ext = file.filename.split(".")[-1]
-    image_id = str(uuid.uuid4())
-    image_path = UPLOAD_DIR / f"{image_id}.{ext}"
-    with open(image_path, "wb") as buffer:
-        buffer.write(await file.read())
+    
+    contents = await file.read()
+    image = Image.open(BytesIO(contents)).convert("RGB") 
 
-    product_class = classify_image(image_path)
-    defect = defect_detection(image_path)
+    product_class = classify_image(image)
+    defect = defect_detection(image)
 
     if defect:
         return templates.TemplateResponse("defect.html", {"request": request, "class": product_class})
     
     else:
+
+        ext = file.filename.split(".")[-1]
+        image_id = str(uuid.uuid4())
+        image_path = UPLOAD_DIR / f"{image_id}.{ext}"
+
+        with open(image_path, "wb") as buffer:
+            buffer.write(contents) 
+
 
         details = generate_description(product_class, prop)
 
@@ -212,13 +218,39 @@ async def upload_image(
     file: UploadFile = File(...),
     days: int = Form(...)
 ):
-    ext = file.filename.split(".")[-1]
-    image_id = str(uuid.uuid4())
-    image_path = UPLOAD_DIR / f"{image_id}.{ext}"
-    with open(image_path, "wb") as buffer:
-        buffer.write(await file.read())
+    contents = await file.read()
+    image = Image.open(BytesIO(contents)).convert("RGB") 
 
-    product_class = classify_image(image_path)
-    defect = defect_detection(image_path)
+    product_class = classify_image(image)
+    defect = defect_detection(image)
 
     return templates.TemplateResponse("returnStatus.html", {"request": request, "class": product_class, "defected": defect, "days": days})
+
+@app.get("/delete/{product_id}")
+async def delete_product(product_id: str):
+    if not DATA_FILE.exists():
+        return RedirectResponse("/", status_code=302)
+
+    # Load existing data
+    with open(DATA_FILE, 'r') as f:
+        data = json.load(f)
+
+    # Find product to delete
+    updated_data = []
+    deleted_image = None
+    for item in data:
+        if item["id"] == product_id:
+            image_filename = Path(item["image"]).name  # Get just the filename
+            deleted_image = UPLOAD_DIR / image_filename
+        else:
+            updated_data.append(item)
+
+    # Save updated JSON
+    with open(DATA_FILE, 'w') as f:
+        json.dump(updated_data, f, indent=4)
+
+    # Delete image file if exists
+    if deleted_image and deleted_image.exists():
+        deleted_image.unlink()
+
+    return RedirectResponse("/", status_code=302)

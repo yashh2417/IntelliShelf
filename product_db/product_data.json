@@ -1,34 +1,5 @@
 [
     {
-        "id": "2e60b380-d020-40aa-a5c8-4df87fa68107",
-        "class": "drum",
-        "image": "/images/2e60b380-d020-40aa-a5c8-4df87fa68107.jpg",
-        "description": "N/A",
-        "features": []
-    },
-    {
-        "id": "8c39e5b8-be9b-49e6-ac88-cca2355f421f",
-        "class": "drum",
-        "image": "/images/8c39e5b8-be9b-49e6-ac88-cca2355f421f.jpg",
-        "description": "N/A",
-        "features": []
-    },
-    {
-        "id": "540444ff-f993-41de-8574-48cf92248a25",
-        "class": "guitar",
-        "image": "/images/540444ff-f993-41de-8574-48cf92248a25.jpg",
-        "description": "N/A",
-        "features": [],
-        "prop": "brown colour, Indian wood, electric, chargeable"
-    },
-    {
-        "id": "9a3b4d7a-187e-444a-858d-4d51a1373dc2",
-        "class": "guitar",
-        "image": "/images/9a3b4d7a-187e-444a-858d-4d51a1373dc2.jpg",
-        "description": "N/A",
-        "features": []
-    },
-    {
         "id": "740ccbb5-800d-4e4c-a569-ff9115d294e7",
         "class": "flute",
         "image": "/images/740ccbb5-800d-4e4c-a569-ff9115d294e7.jpg",
@@ -86,17 +57,6 @@
         ]
     },
     {
-        "id": "60038d8d-51a2-4699-b574-56c18470ff6d",
-        "class": "drum",
-        "image": "/images/60038d8d-51a2-4699-b574-56c18470ff6d.jpg",
-        "description": "A sleek, black steel drum, played with wooden sticks, offers a resonant and powerful sound.  The durable steel construction ensures longevity, while the wooden sticks provide a warm, controlled tone.",
-        "features": [
-            "Black color",
-            "Steel construction",
-            "Wooden playing sticks"
-        ]
-    },
-    {
         "id": "c34675c7-f447-4094-bfc5-484578803ad2",
         "class": "drum",
         "image": "/images/c34675c7-f447-4094-bfc5-484578803ad2.jpg",
@@ -105,39 +65,6 @@
             "Black color",
             "Steel construction",
             "Wooden playing sticks"
-        ]
-    },
-    {
-        "id": "c396f519-e133-4409-b267-2213c6ea858d",
-        "class": "drum",
-        "image": "/images/c396f519-e133-4409-b267-2213c6ea858d.jpg",
-        "description": "This is a sleek, black steel drum, played with included wooden sticks.  Its robust construction ensures durability and a resonant sound.",
-        "features": [
-            "Black color",
-            "Steel construction",
-            "Wooden playing sticks"
-        ]
-    },
-    {
-        "id": "13f5b2d4-2c14-452d-a248-db6a25fb5dc5",
-        "class": "drum",
-        "image": "/images/13f5b2d4-2c14-452d-a248-db6a25fb5dc5.jpg",
-        "description": "Experience the rich, resonant tones of this traditional Indian drum, crafted from exquisite wood.  The natural warmth of the wood enhances the percussive sound, creating a truly authentic and captivating musical experience. Played with accompanying wooden sticks, this drum is perfect for adding a touch of traditional Indian music to your performances or practice sessions.",
-        "features": [
-            "Traditional Indian design",
-            "Indian wood construction",
-            "Wooden sticks included"
-        ]
-    },
-    {
-        "id": "26c4ea8d-e8be-434d-ae73-625b7234d21c",
-        "class": "drum",
-        "image": "/images/26c4ea8d-e8be-434d-ae73-625b7234d21c.jpg",
-        "description": "Experience the rich, resonant tones of this traditional Indian drum, crafted from exquisite wood.  Its warm, organic sound is brought to life using accompanying wooden sticks, offering a truly authentic playing experience.  Perfect for adding a touch of cultural heritage to your music or meditation practice.",
-        "features": [
-            "Traditional Indian design",
-            "Indian wood construction",
-            "Wooden sticks included"
         ]
     },
     {
@@ -161,84 +88,6 @@
             "Wooden body",
             "5 strings",
             "Electric"
-        ]
-    },
-    {
-        "id": "6dd04948-d089-49da-a821-8a14cd00935f",
-        "class": "guitar",
-        "image": "/images/6dd04948-d089-49da-a821-8a14cd00935f.jpg",
-        "description": "A sleek, black electric guitar crafted from wood, boasting five strings for a unique and powerful sound.",
-        "features": [
-            "Black colour",
-            "Wooden body",
-            "5 strings",
-            "Electric"
-        ]
-    },
-    {
-        "id": "674a309d-0d1f-4969-ae76-a4d0f6f2e15f",
-        "class": "violin",
-        "image": "/images/674a309d-0d1f-4969-ae76-a4d0f6f2e15f.jpg",
-        "description": "A cool, wooden violin, its smooth curves and rich tone hinting at years of musical stories.  The wood's warmth resonates not only in the sound but also in the feel of the instrument itself.",
-        "features": [
-            "Cool aesthetic",
-            "Wooden body",
-            "Smooth curves",
-            "Rich tone"
-        ]
-    },
-    {
-        "id": "f9e2a4ea-bc29-43af-a0ba-6a0165573a7b",
-        "class": "flute",
-        "image": "/images/f9e2a4ea-bc29-43af-a0ba-6a0165573a7b.jpeg",
-        "description": "This exquisite 7-inch wooden flute features six finger holes, offering a sweet and mellow tone.  Its compact size makes it perfect for travel or intimate performances. Crafted from carefully selected wood, this flute provides a warm and resonant sound, ideal for both beginners and experienced players.",
-        "features": [
-            "Wooden",
-            "7 inches",
-            "6 holes"
-        ]
-    },
-    {
-        "id": "165234ee-9f98-4242-9939-4b4cfb652e3a",
-        "class": "guitar",
-        "image": "/images/165234ee-9f98-4242-9939-4b4cfb652e3a.jpeg",
-        "description": "This is a super cool guitar for kids! It's small and easy to hold, perfect for learning your first chords.  Notice the four sound holes \u2013 they help the guitar's sound ring out beautifully!",
-        "features": [
-            "4 sound holes",
-            "Small size for little hands",
-            "Easy to play",
-            "Great for beginners"
-        ]
-    },
-    {
-        "id": "36e09287-3176-4e5c-a99c-1d890834cd2e",
-        "class": "guitar",
-        "image": "/images/36e09287-3176-4e5c-a99c-1d890834cd2e.jpg",
-        "description": "This is a powerful and versatile 5-string electric guitar, designed for players who demand a wider range and heavier tone.  Its extended range opens up new sonic possibilities, perfect for genres like progressive rock, metal, and experimental music. The electric pickups deliver a rich, dynamic sound with plenty of punch and sustain.",
-        "features": [
-            "Electric",
-            "5 Strings"
-        ]
-    },
-    {
-        "id": "5e0823df-0dea-456b-a390-21c3a9dcfb4f",
-        "class": "violin",
-        "image": "/images/5e0823df-0dea-456b-a390-21c3a9dcfb4f.jpg",
-        "description": "A rich, brown wooden violin, its resonant body promising a powerful sound.  The strong strings are taut, ready to sing.",
-        "features": [
-            "Brown",
-            "Wooden",
-            "Strong strings"
-        ]
-    },
-    {
-        "id": "dc017d9a-dd95-496d-90c0-23cb2922f0ed",
-        "class": "violin",
-        "image": "/images/dc017d9a-dd95-496d-90c0-23cb2922f0ed.jpg",
-        "description": "A rich, brown wooden violin, its smooth curves hinting at the resonant tones held within. The warm brown of the wood speaks of age and craftsmanship, promising a beautiful and expressive sound.",
-        "features": [
-            "Wooden",
-            "Brown"
         ]
     }
 ]
