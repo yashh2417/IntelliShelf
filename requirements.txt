@@ -2,7 +2,7 @@ fastapi
 uvicorn
 jinja2
 pillow
-torch==2.5.0
+torch==2.7.0
 torchvision==0.22.0
 ultralytics
 python-multipart
