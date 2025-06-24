@@ -13,6 +13,8 @@ from pydantic import BaseModel
 from PIL import Image
 from torchvision import transforms
 import torch
+import os
+os.environ["YOLO_CONFIG_DIR"] = "/tmp"
 from ultralytics import YOLO
 
 from langchain.memory import ConversationBufferMemory
