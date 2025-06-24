@@ -9,3 +9,6 @@ services:
         sync: false  # You’ll set this manually in the Render dashboard
     plan: free
     autoDeploy: true
+    build:
+      pythonVersion: 3.10
+
