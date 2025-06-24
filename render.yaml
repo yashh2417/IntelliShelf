@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: intellishelf-store
+    runtime: python
+    buildCommand: ""
+    startCommand: uvicorn store.main:app --host 0.0.0.0 --port 10000
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false  # You’ll set this manually in the Render dashboard
+    plan: free
+    autoDeploy: true
