@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+.git/
+*.log
+.vscode/
+.idea/
+*.jpg
+*.jpeg
+*.png
+notebooks
+dataset
+defect-dataset
+yolo8n.pt
+defect.yaml
+intellishelf-env
+.DS_Store
+

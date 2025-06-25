@@ -1,6 +1,7 @@
 # 🛍️ IntelliShelf – AI-Powered Smart Instrument Store 🧠🎸
 
-![IntelliShelf Banner](docs/banner.png) <!-- Add banner.png later -->
+### Entire Pipeline
+![IntelliShelf Pipeline](https://github.com/yashh2417/faltu/blob/main/pipeline.png?raw=true) 
 
 Welcome to **IntelliShelf**, a full-stack AI-powered demo platform that combines **Computer Vision**, **LLMs**, and **RAG** to deliver a futuristic musical instrument e-commerce experience. From **automated defect detection** to **LLM-generated descriptions** and **FAQ-based chatbot assistance**, everything is built with modularity and scalability in mind.
 
@@ -17,7 +18,7 @@ Welcome to **IntelliShelf**, a full-stack AI-powered demo platform that combines
 | 📦 Image Upload + Storage        | FastAPI + PIL                             |
 | 🛒 Return Eligibility Detection  | Vision + Business Rule Logic              |
 | 🖥️ Web Interface                 | FastAPI + Jinja2 Templates + HTML/CSS     |
-| ☁️ Deployment Ready              | Render                                     |
+| ☁️ Container                     | Docker                                    |
 
 ---
 
@@ -47,7 +48,7 @@ intellishelf/
 ## 🚀 Live Demo Walkthrough
 
 ### 1. Upload Product Image
-![Upload Screenshot](docs/upload.png)
+![Upload Screenshot](https://github.com/yashh2417/faltu/blob/main/add-product.png?raw=true)
 
 - Upload any musical instrument image.
 - Fill in product **specifications**.
@@ -58,7 +59,12 @@ intellishelf/
 ---
 
 ### 2. Description & Feature Generation
-![Generated Description](docs/generated_description.png)
+
+#### Clean Image
+![Generated Description](https://github.com/yashh2417/faltu/blob/main/added-product.png?raw=true)
+
+#### Defected Image
+![Found Defect](https://github.com/yashh2417/faltu/blob/main/defected-product.png?raw=true)
 
 - Based on the uploaded specs, **Gemini LLM** creates:
   - 📝 Human-readable product **description**
@@ -67,7 +73,7 @@ intellishelf/
 ---
 
 ### 3. Product Catalog Page
-![Product Grid](docs/catalog.png)
+![Product Grid](https://github.com/yashh2417/faltu/blob/main/product.png?raw=true)
 
 - View uploaded products.
 - Each item has:
@@ -77,7 +83,7 @@ intellishelf/
 ---
 
 ### 4. Chatbot – Return & Policy Help
-![Chatbot UI](docs/chatbot.png)
+![Chatbot UI](https://github.com/yashh2417/faltu/blob/main/chatbot.png?raw=true)
 
 - Powered by:
   - 🔍 Chroma (vector DB)
@@ -89,7 +95,15 @@ intellishelf/
 ---
 
 ### 5. Return Eligibility Checker
-![Return Status](docs/return.png)
+
+#### Return Eligibility Checker
+![Return Status](https://github.com/yashh2417/faltu/blob/main/return.png?raw=true)
+
+#### Return Rejected-clean product
+![Return Rejected-clean product](https://github.com/yashh2417/faltu/blob/main/return-response1.png?raw=true)
+
+#### Return Rejected-defected product
+![Return Rejected-defected product](https://github.com/yashh2417/faltu/blob/main/return-response2.png?raw=true)
 
 - Upload product photo + purchase age (in days)
 - Uses:
@@ -162,17 +176,62 @@ Visit 👉 `http://localhost:8000`
 
 ---
 
-## 🌍 Deployment
+## 🐳 Docker Usage
 
-### Using Render.com
+This app is fully containerized and ready to deploy via Docker.
 
-* Configure:
+### 🧱 Build & Push Docker Image (for Developers)
 
-  * `render.yaml`
-  * Static files: `static/`, `templates/`
-  * Mount `product_db/` as persistent volume
-* Add environment variable `GOOGLE_API_KEY`
-* Use **Render Free Plan** or paid depending on storage needs
+```bash
+# Build image
+docker build -t yashh2417/intellishelf-store:latest .
+
+# Login to Docker Hub
+docker login
+
+# Push to Docker Hub
+docker push yashh2417/intellishelf-store:latest
+
+```
+
+### 🏃 Run via Docker (Local)
+```bash
+docker run -p 8000:8000 \
+  -e GOOGLE_API_KEY=your_gemini_api_key \
+  yashh2417/intellishelf-store:latest
+Visit 👉 http://localhost:8000
+```
+
+---
+
+### ☁️ Cloud Deployment (Next Step)
+Once image is pushed to Docker Hub, deploy using:
+
+#### **✅ Option 1:** AWS Lightsail (Recommended for ARM64)
+
+* Create Container Service
+
+* **Use image:** yashh2417/intellishelf-store:latest
+
+* Expose port 8000
+
+* Add GOOGLE_API_KEY as secret environment variable
+
+#### **✅ Option 2:** Oracle Cloud (Always Free ARM VM + CapRover)
+
+* Launch Ampere VM
+
+* Install Docker + CapRover
+
+* Use your DockerHub image to deploy
+
+#### **✅ Option 3:** Azure Container Apps
+
+* Supports private/public registry
+
+* Auto‑restart, logging, HTTPS support
+
+> 💡 You must ensure platform = linux/arm64 for all deployments (check Docker image architecture)
 
 ---
 
@@ -215,10 +274,12 @@ If planning a real launch:
 * **Frontend**: HTML + Jinja2 + CSS
 * **Backend**: FastAPI
 * **LLM**: Gemini 1.5 Flash
+* **RAG**: LangChain + Chroma
 * **Embedding**: GoogleGenerativeAIEmbeddings
 * **Database**: JSON + ChromaDB
 * **CV Models**: YOLOv8 + PyTorch CNN
-* **Hosting**: Render.com
+* **Container**: Docker (ARM64)
+* **Deployment**: Docker Hub → AWS/Oracle/Railway
 
 ---
 
@@ -227,7 +288,7 @@ If planning a real launch:
 * [Google Gemini API](https://makersuite.google.com/)
 * [Ultralytics YOLOv8](https://docs.ultralytics.com)
 * [LangChain](https://docs.langchain.com/)
-* [Render](https://render.com/)
+* [Docker](https://hub.docker.com/)
 
 ---
 
@@ -237,7 +298,7 @@ If planning a real launch:
 * 🔗 LinedIn: [@yashh2417](https://www.linkedin.com/in/yashh2417?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BHlQpB0ovQvuXk8LrDjdYTA%3D%3D)
 * 🐦 Twitter: [@yashh2417](https://twitter.com/yashh2417)
 * 💼 Portfolio: [@yashh2417](https://www.datascienceportfol.io/yashh2417)
-* 🌐 Website: [IntelliShelf](https://www.datascienceportfol.io/yashh2417)
+* 🌐 Docker-Image: [Docker-Image](https://hub.docker.com/repository/docker/yashh2417/intellishelf-store)
 
 ---
 

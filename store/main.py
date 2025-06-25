@@ -13,8 +13,6 @@ from pydantic import BaseModel
 from PIL import Image
 from torchvision import transforms
 import torch
-import os
-os.environ["YOLO_CONFIG_DIR"] = "/tmp"
 from ultralytics import YOLO
 
 from langchain.memory import ConversationBufferMemory
@@ -31,24 +29,31 @@ load_dotenv()
 # UPLOAD_DIR.mkdir(exist_ok=True)
 # DATA_FILE = Path("product_data.json")
 
-UPLOAD_DIR = Path("../product_db/uploaded_images")
+# UPLOAD_DIR = Path("../product_db/uploaded_images")
+# UPLOAD_DIR.mkdir(exist_ok=True)
+# DATA_FILE = Path("../product_db/product_data.json")
+
+UPLOAD_DIR = Path("/app/product_db/uploaded_images")
 UPLOAD_DIR.mkdir(exist_ok=True)
-DATA_FILE = Path("../product_db/product_data.json")
+DATA_FILE = Path("/app/product_db/product_data.json")
+CLASSIFY_MODEL_PATH = Path("/app/model/classify.pth")
+DEFECT_DETECTION_MODEL_PATH = Path("/app/runs/detect/train2/weights/best.pt")
+PERSIST_DIRECTORY = "/app/chromadb"         # setting as str intensionally
 
 app = FastAPI()
 app.mount("/images", StaticFiles(directory=UPLOAD_DIR), name="images")
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="/app/store/static"), name="static")
+templates = Jinja2Templates(directory="/app/store/templates")
 
 # --- Load Model and Preprocessing ---
 DEVICE = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
 
 classes = ['drum', 'flute', 'guitar', 'tabla', 'violin']
-classify_model = torch.load("../model/classify.pth", map_location=DEVICE, weights_only=False)
+classify_model = torch.load(CLASSIFY_MODEL_PATH, map_location=DEVICE, weights_only=False)
 classify_model.eval()
 classify_model.to(DEVICE)
 
-defect_detection_model = YOLO("../runs/detect/train2/weights/best.pt")
+defect_detection_model = YOLO(DEFECT_DETECTION_MODEL_PATH)
 
 preprocess = transforms.Compose([
     transforms.Resize(256),
@@ -59,8 +64,12 @@ preprocess = transforms.Compose([
 ])
 
 # Initialize components
-embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
-vectordb = Chroma(persist_directory="../chromadb", embedding_function=embedding)
+embedding = GoogleGenerativeAIEmbeddings(
+    model="models/embedding-001",
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
+
+vectordb = Chroma(persist_directory=PERSIST_DIRECTORY, embedding_function=embedding)
 
 # --- Gemini Model ---
 model = ChatGoogleGenerativeAI(
